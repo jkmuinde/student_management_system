@@ -1,3 +1,13 @@
 from django.contrib import admin
 
-# Register your models here.
+from . models import Faculty, Tribe
+
+
+
+class FacultyAdmin(admin.ModelAdmin):
+    model:Faculty
+    list_display=('code','name')
+
+
+admin.site.register(Faculty, FacultyAdmin)
+admin.site.register(Tribe)
