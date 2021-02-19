@@ -9,14 +9,14 @@
         <table class="table table-responsive table-striped">
             <tr>
                 <th>#</th>
-                <th>Trine name</th>
+                <th>Tribe name</th>
             </tr>
-        {% for tribe in tribe_list%}
+        {% for tribe in tribe_list %}
 <tr>
     <td>
         {{ forloop.counter }}
     </td>
-    <td><a href="{% url 'tribe_detail' tribe.id %}"> {{tribe_name }} </a></td>
+    <td><a href="{% url 'tribe_detail' tribe.id %}"> {{ tribe.name }} </a></td>
         {% empty %}
         <tr>
 <p class="text text-default">We did not find any records for you</p>

@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="print" id="print">
+    {% include 'logo.html' %}
+    
+    <div class="container">
+<p class="h2">Student Profile</p>
+<p class="h3">{{ studentprofile.profile.first_name|capfirst }} 
+    {{ studentprofile.profile.middle_name|capfirst }} 
+    {{ studentprofile.profile.surname|capfirst }} </p>
+
+<table class="table table-active table-hover table-responsive">
+    <tr>
+        <td>Gender</td>
+        <td>{{ studentprofile.gender}}</td>
+    </tr>
+    <tr>
+        <td>Course Taken</td>
+        <td>{{ studentprofile.course}}</td>
+    </tr>
+    <tr>
+        <td>Accomodation</td>
+        <td>{{studentprofile.accomodation}} </td>
+    </tr>
+    <tr>
+        <td>Student Type</td>
+        <td>{{ studentprofile.student_type}}</td>
+    </tr>
+    <tr>
+        <td>YOB</td>
+        <td>{{ studentprofile.yob}}</td>
+    </tr>
+    <tr>
+        <td>Ethnic Group</td>
+        <td>{{studentprofile.tribe}}</td>
+    </tr>
+    <tr>
+        <td>Home County</td>
+        <td>{{studentprofile.county}}</td>
+    </tr>
+    
+</table>
+    </div>
+    
+    {% endblock %}

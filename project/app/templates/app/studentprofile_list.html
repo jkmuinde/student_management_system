@@ -6,7 +6,7 @@
     
     <div class="container">
         <h1 class="text text-default">All student records</h1>
-        <table class="table table-responsive table-striped">
+        <table class="table table-responsive table-striped table-hover table-bordered">
             <tr>
                 <th>#</th>
                 <th>Reg No.</th>
@@ -18,12 +18,22 @@
                 <th>YOB</th>
                 <th>Sponsorship</th>
             </tr>
-            {% for studentprof in studentprofile_list %}
+            {% for prof in studentprofile_list %}
             <tr>
                 <td>
                     {{ forloop.counter }}
                 </td>
-                <td><a href="{% url 'student_detail' studentprof.id%}"> {{ studentprof.student.regno }} </a></td>
+                <td><a href="{% url 'student_detail' prof.id %}"> {{ prof.profile.regno }} </a></td>
+                <td>
+                    {{ prof.profile.surname|capfirst}}
+                    {{ prof.profile.first_name|capfirst }}
+                </td>
+                <td>{{ prof.gender }}</td>
+                <td>{{ prof.course}}</td>
+                <td>{{ prof.county}}</td>
+                <td>{{ prof.tribe }}</td>
+                <td>{{ prof.yob }}</td>
+                <td>{{ prof.student_type }}</td>
                
 
 

@@ -1,7 +1,7 @@
 from django.db import models
 from django.shortcuts import render
 from django.views import generic
-from . models import Faculty, County, Tribe, Course, Student
+from . models import Faculty, County, StudentProfile, Tribe, Course, Student
 
 # Create your views here.
 def index(request):
@@ -16,12 +16,12 @@ def index(request):
     template_name='admin/home.html'
     return render(request, template_name, context)
 
-class StudentList(generic.ListView):
-    model=Student
+class StudentProfileList(generic.ListView):
+    model=StudentProfile
     tenplate_name='app/student_list.html'
 
-class StudentDetail(generic.DetailView):
-    model=Student
+class StudentProfileDetail(generic.DetailView):
+    model=StudentProfile
     template_name='app/student_detail.html'
 
 class FacultyList(generic.ListView):
