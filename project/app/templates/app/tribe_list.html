@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="print" id="print">
+    {% include 'logo.html' %}
+
+    <div class="container">
+        <h1 class="text text-default">Ethnic Groups Represented</h1>
+        <table class="table table-responsive table-striped">
+            <tr>
+                <th>#</th>
+                <th>Trine name</th>
+            </tr>
+        {% for tribe in tribe_list%}
+<tr>
+    <td>
+        {{ forloop.counter }}
+    </td>
+    <td><a href="{% url 'tribe_detail' tribe.id %}"> {{tribe_name }} </a></td>
+        {% empty %}
+        <tr>
+<p class="text text-default">We did not find any records for you</p>
+</tr>
+        {% endfor%}
+        <tr>
+            <td>
+                <button type="button" class="btn btn-success" onclick="return PrintData('print');">Print Data</button>
+            </td>
+        </tr>
+    </table>
+    </div>
+</div>
+
+{% endblock %}

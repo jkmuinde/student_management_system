@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="print" id="print">
+    {% include 'logo.html' %}
+
+    <div class="container">
+        <h1 class="text text-default">Counties</h1>
+        <table class="table table-responsive table-striped">
+            <tr>
+                <th>County Code</th>
+                <th>County Name</th>
+            </tr>
+        {% for county in county_list%}
+<tr>
+  
+    <td> {{ county.code|capfirst }}</td>
+    <td><a href="{% url 'county_detail' county.id %}">
+        {{ county.name|capfirst }} County </a></td>
+</tr>
+        {% empty %}
+        <tr>
+<p class="text text-default">We did not find any records for you</p>
+</tr>
+        {% endfor%}
+        <tr>
+            <td>
+                <button type="button" class="btn btn-success" onclick="return PrintData('print');">Print Data</button>
+            </td>
+        </tr>
+    </table>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="print" id="print">
+    {% include 'logo.html' %}
+
+    <div class="container">
+        <h1 class="text text-default">Faculties</h1>
+        <table class=" table table-responsive table-striped">
+            <tr>
+                <th>#</th>
+                <th>faculty Code</th>
+                <th>Faculty Name</th>
+            </tr>
+        {% for faculty in faculty_list%}
+<tr>
+    <td>
+        {{ forloop.counter }}
+    </td>
+    <td><a href="{% url 'faculty_detail' faculty.id %}"> {{faculty.code }} </a></td>
+            <td> {{ faculty.name }}</td>
+</tr>
+        {% empty %}
+        <tr>
+<p class="text text-default">We did not find any records for you</p>
+</tr>
+        {% endfor%}
+        <tr>
+            <td>
+                <button type="button" class="btn btn-success" onclick="return PrintData('print');">Print Data</button>
+            </td>
+        </tr>
+    </table>
+    </div>
+</div>
+
+{% endblock %}

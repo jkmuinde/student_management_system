@@ -1,35 +1,45 @@
 from django.db import models
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import User
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+import datetime
 # Create your models here.
 
-class CustomUser(AbstractUser):
-    user_type_data=(
-        (1,'admin'),
-        (2,'staff'),
-        (3, 'student')
+YEAR_CHOICES = [(r,r) for r in range(1950, datetime.date.today().year-5)]
+
+class Student(models.Model):
+    reg_no=models.CharField('Registration Number',max_length=100, blank=False, null=False, )
+    first_name=models.CharField("first name", blank=False, null=False, max_length=255)
+    middle_name=models.CharField("first name", blank=False, null=False, max_length=255)
+    surname=models.CharField("first name", blank=False, null=False, max_length=255)
+    email=models.EmailField('Email Address', blank=True, null=True, max_length=255)
+    phone=models.CharField('Phone Number', blank=True, null=True, max_length=255)
+
+class StudentProfile(models.Model):
+    student_type_data=(
+        ('P','Part Time'),
+        ('R', "Regular")
+    )
+    accomodation_type=(
+        ('H','Hostels'),
+        ('R', "Rentals")
     )
     user_gender=(
         ('M','Male'),
         ('F', "Female")
     )
-    user_type=models.CharField(default=None, choices=user_type_data,max_length=10,blank=False, null=False)
+    student_type=models.CharField(default=None, choices=student_type_data,max_length=10,blank=False, null=False)
+    accomodation=models.CharField(default=None, blank=True, null=True, choices=accomodation_type, max_length=10)
     gender=models.CharField(default=None, choices=user_gender, max_length=5, blank=False, null=False)
+    course=models.ForeignKey('Course', help_text='COurse taken', on_delete=models.CASCADE, null=True, blank=True)
+    tribe=models.ForeignKey('Tribe', on_delete=models.SET_NULL, blank=True, null=True)
+    County=models.ForeignKey('County', on_delete=models.SET_NULL, blank=True, null=True)
+    profile = models.OneToOneField(Student, on_delete=models.CASCADE)
+    YOB=models.IntegerField("Year of Birth", choices=YEAR_CHOICES, default=datetime.datetime.now().year-15)
 
+    def __str__(self):  # __unicode__ for Python 2
+        return self.profile.first_name + " "+self.profile.first_name+" "+self.profile.first_name
 
-class AdminUser(models.Model):
-    id = models.AutoField(primary_key=True)
-    admin = models.OneToOneField(CustomUser, on_delete = models.CASCADE)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-    objects = models.Manager()
-
-class StudentUser(models.Model):
-    id = models.AutoField(primary_key=True)
-    admin = models.OneToOneField(CustomUser, on_delete = models.CASCADE)
-    address = models.TextField()
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-    objects = models.Manager()
 
 
 
@@ -45,6 +55,19 @@ class Faculty(models.Model):
 
     def __str__(self):
         return self.code
+
+class Course(models.Model):
+    code=models.CharField('Course Code', blank=False, null=False, max_length=100)
+    name=models.CharField('Course taken', blank=False, null=False, max_length=255)
+    Faculty=models.ForeignKey(Faculty, on_delete=models.CASCADE)
+
+    class Meta:
+        ordering='code',
+        verbose_name_plural='Courses'
+
+    def __str__(self):
+        return self.code
+
 
 class Tribe(models.Model):
     name=models.CharField('Ethnic Group', blank=False, null=False, max_length=255)
@@ -68,27 +91,3 @@ class County(models.Model):
     def __str__(self):
         f_name=self.name
         return f_name.capitalize() + " County"
-
-
-@receiver(post_save, sender=CustomUser)
-# Now Creating a Function which will automatically insert data in HOD, Staff or Student
-def create_user_profile(sender, instance, created, **kwargs):
-    # if Created is true (Means Data Inserted)
-    if created:
-        # Check the user_type and insert the data in respective tables
-        if instance.user_type == 1:
-            AdminHOD.objects.create(admin=instance)
-        if instance.user_type == 2:
-            Staffs.objects.create(admin=instance)
-        if instance.user_type == 3:
-            Students.objects.create(admin=instance, course_id=Courses.objects.get(id=1), session_year_id=SessionYearModel.objects.get(id=1), address="", profile_pic="", gender="")
-    
-
-@receiver(post_save, sender=CustomUser)
-def save_user_profile(sender, instance, **kwargs):
-    if instance.user_type == 1:
-        instance.adminhod.save()
-    if instance.user_type == 2:
-        instance.staffs.save()
-    if instance.user_type == 3:
-        instance.students.save()
