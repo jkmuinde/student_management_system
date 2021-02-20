@@ -56,8 +56,10 @@ def index(request):
         student_count_list_per_county.append(students)
 
 
+        #
 
-        
+
+       
     context={
         'student_count':student_count,
         'faculty_count':faculty_count,
