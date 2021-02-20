@@ -61,7 +61,7 @@ class Faculty(models.Model):
 class Course(models.Model):
     code=models.CharField('Course Code', blank=False, null=False, max_length=100)
     name=models.CharField('Course taken', blank=False, null=False, max_length=255)
-    Faculty=models.ForeignKey(Faculty, on_delete=models.CASCADE)
+    faculty=models.ForeignKey(Faculty, on_delete=models.CASCADE)
 
     class Meta:
         ordering='code',

@@ -3,14 +3,15 @@
 {% load static %}
 
 <section class="content">
-        <div class="container-fluid">
+        <div class="container-fluid" id="print">
+          {% include 'logo.html' %}
           <!-- Small boxes (Stat box) -->
           <div class="row">
             <div class="col-lg-3 col-6">
               <!-- small box -->
               <div class="small-box bg-info">
                 <div class="inner">
-                  <h3>{{ all_student_count }}</h3>
+                  <h3>{{ faculty_count }}</h3>
 
                   <p>Total faculties</p>
                 </div>
@@ -25,7 +26,7 @@
               <!-- small box -->
               <div class="small-box bg-danger">
                 <div class="inner">
-                  <h3>{{ staff_count }}</h3>
+                  <h3>{{ course_count }}</h3>
 
                   <p>Total Courses</p>
                 </div>
@@ -41,7 +42,7 @@
               <!-- small box -->
               <div class="small-box bg-warning">
                 <div class="inner">
-                  <h3>{{ course_count }}</h3>
+                  <h3>{{ tribe_count }}</h3>
 
                   <p>Total Tribes</p>
                 </div>
@@ -56,9 +57,9 @@
               <!-- small box -->
               <div class="small-box bg-success">
                 <div class="inner">
-                  <h3>{{ subject_count }}</h3>
+                  <h3>{{ county_count }}</h3>
 
-                  <p>Total Couties</p>
+                  <p>Total Counties</p>
                 </div>
                 <div class="icon">
                   <i class="ion ion-stats-bars"></i>
